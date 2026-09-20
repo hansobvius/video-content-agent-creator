@@ -1,0 +1,38 @@
+{
+  "project_id": "hybrid-car-explainer",
+  "version": 1,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "title": "Introdução",
+      "duration_seconds": 45,
+      "narration": "Olá! Hoje vamos entender tudo sobre Como funciona um carro híbrido.",
+      "objective": "Apresentar o tema e prender a atenção do espectador.",
+      "visual_intent": "Veículo em destaque com gráficos modernos e estilo moderno e didático."
+    },
+    {
+      "scene_id": "scene_002",
+      "title": "Conceito Principal",
+      "duration_seconds": 105,
+      "narration": "Para entendermos o funcionamento, veja como os principais componentes interagem de forma integrada.",
+      "objective": "Explicar a dinâmica central do conteúdo.",
+      "visual_intent": "Animação esquemática mostrando fluxo de energia e peças centrais."
+    },
+    {
+      "scene_id": "scene_003",
+      "title": "Aprofundamento dos Tópicos",
+      "duration_seconds": 105,
+      "narration": "Cobrimos tópicos essenciais como motor elétrico, motor a combustão, bateria de tração.",
+      "objective": "Detalhar os tópicos obrigatórios do briefing.",
+      "visual_intent": "Cortes alternados com elementos visuais elucidativos."
+    },
+    {
+      "scene_id": "scene_004",
+      "title": "Conclusão e Encerramento",
+      "duration_seconds": 45,
+      "narration": "Agora você conhece como funciona Como funciona um carro híbrido. Deixe seu like e até a próxima!",
+      "objective": "Resumir os pontos-chave e convidar à ação.",
+      "visual_intent": "Resumo visual com call to action final."
+    }
+  ]
+}

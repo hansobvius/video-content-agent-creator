@@ -131,13 +131,21 @@ Esses componentes serão adicionados nos MVPs posteriores.
            │ Human Approval  │
            └───────┬─────────┘
                    │
-           ┌───────┴─────────┐
-           │                 │
-           ▼                 ▼
-       APPROVED          REVISION
-                            │
-                            ▼
-                       ScriptAgent
+       ┌───────────┼──────────────────────┐
+       │           │                      │
+       ▼           ▼                      ▼
+   APPROVED   REVISION (Script)      REVISION (Storyboard)
+                   │                      │
+                   ▼                      ▼
+              ScriptAgent           StoryboardAgent
+                   │                      │
+                   ▼                      │
+            StoryboardAgent               │
+                   │                      │
+                   └──────────┬───────────┘
+                              │
+                              ▼
+                        Human Approval
 ```
 
 ---
@@ -158,7 +166,9 @@ Principais responsabilidades:
 - persistir o storyboard;
 - atualizar o estado do projeto;
 - interromper o pipeline na etapa de aprovação;
-- reiniciar o fluxo caso uma revisão seja solicitada.
+- rotear granularmente as revisões solicitadas:
+  - se a revisão for de roteiro (`target: script`), re-executar `ScriptAgent` e subsequentemente o `StoryboardAgent`;
+  - se a revisão for exclusivamente visual (`target: storyboard`), re-executar apenas o `StoryboardAgent`, preservando a versão do roteiro já aprovada.
 
 O agente orquestrador não deverá escrever diretamente o roteiro ou storyboard.
 
@@ -341,12 +351,12 @@ Exemplo:
   "current_stage": "storyboard",
   "versions": {
     "script": 2,
-    "storyboard": 1
+    "storyboard": 3
   },
   "artifacts": {
     "spec": "VIDEO_SPEC.yaml",
     "script": "scripts/script_v2.json",
-    "storyboard": "storyboards/storyboard_v1.json"
+    "storyboard": "storyboards/storyboard_v3.json"
   }
 }
 ```
@@ -361,7 +371,8 @@ SCRIPT_COMPLETED
 STORYBOARD_GENERATING
 STORYBOARD_COMPLETED
 AWAITING_APPROVAL
-REVISION_REQUESTED
+REVISION_SCRIPT_REQUESTED
+REVISION_STORYBOARD_REQUESTED
 APPROVED
 FAILED
 ```
@@ -372,7 +383,7 @@ FAILED
 
 O MVP deverá obrigatoriamente parar antes da etapa de produção audiovisual.
 
-O usuário poderá executar duas ações.
+O usuário poderá executar ações de aprovação ou revisão granular:
 
 ## Aprovar
 
@@ -390,40 +401,88 @@ Resultado:
 
 ---
 
-## Solicitar revisão
+## Solicitar revisão granular
 
-Exemplo:
+O usuário poderá direcionar o feedback especificando o alvo da revisão (`target: script` ou `target: storyboard`):
 
-```text
-revision:
-"A cena 4 está muito técnica. Simplifique a explicação."
+### Cenário 1: Revisão de Roteiro (`target: script`)
+
+Utilizado quando há necessidade de alterar o texto da narração, tom, divisão das cenas ou objetivos narrativos.
+
+Exemplo de feedback:
+
+```json
+{
+  "target": "script",
+  "feedback": "A cena 4 está muito técnica. Simplifique a explicação."
+}
 ```
 
 O sistema deverá:
 
 ```text
-1. registrar o feedback;
-2. incrementar a versão do roteiro;
+1. registrar o feedback em feedback/revision_XXX.json;
+2. incrementar a versão do roteiro (ex: script_v2);
 3. executar novamente o ScriptAgent;
-4. gerar novamente o Storyboard;
-5. retornar para aprovação.
+4. incrementar a versão do storyboard (ex: storyboard_v2);
+5. executar o StoryboardAgent para refletir o novo roteiro;
+6. retornar para o estado AWAITING_APPROVAL.
 ```
 
 Fluxo:
 
 ```text
-Storyboard v1
+Storyboard v1 (Awaiting Approval)
       ↓
-Human Review
-      ↓
-Revision Request
+Revision Request (target: script)
       ↓
 Script v2
       ↓
 Storyboard v2
       ↓
-Human Review
+Human Review (Awaiting Approval)
 ```
+
+---
+
+### Cenário 2: Revisão de Storyboard (`target: storyboard`)
+
+Utilizado quando o texto narrativo do roteiro já está satisfatório, mas as instruções visuais (tipo de asset, enquadramento de câmera, transição ou descrição da cena) precisam ser corrigidas.
+
+Exemplo de feedback:
+
+```json
+{
+  "target": "storyboard",
+  "feedback": "Na cena 3, mude o asset_type para 'diagram' e mostre um corte esquemático do motor."
+}
+```
+
+O sistema deverá:
+
+```text
+1. registrar o feedback em feedback/revision_XXX.json;
+2. preservar intacta a versão atual do roteiro (ex: mantém script_v1);
+3. incrementar apenas a versão do storyboard (ex: storyboard_v2);
+4. executar apenas o StoryboardAgent com o feedback visual aplicado;
+5. retornar para o estado AWAITING_APPROVAL.
+```
+
+Fluxo:
+
+```text
+Storyboard v1 (Awaiting Approval)
+      ↓
+Revision Request (target: storyboard)
+      ↓
+(Script v1 preservado)
+      ↓
+Storyboard v2
+      ↓
+Human Review (Awaiting Approval)
+```
+
+Essa granularidade evita a perda de roteiros já aprovados e reduz o custo/tempo de re-execução do modelo desnecessariamente.
 
 ---
 
@@ -767,7 +826,7 @@ e obter:
 7. pipeline pausado em AWAITING_APPROVAL.
 ```
 
-Também deverá ser possível solicitar:
+Também deverá ser possível executar as ações:
 
 ```text
 approve
@@ -776,10 +835,10 @@ approve
 ou:
 
 ```text
-revision
+revision (com target: script ou target: storyboard)
 ```
 
-Uma revisão deverá produzir novas versões dos artefatos sem excluir versões anteriores.
+Uma revisão deverá produzir novas versões dos artefatos afetados sem excluir versões anteriores e sem re-executar etapas desnecessárias (ex: revisão de storyboard mantém o roteiro existente).
 
 ---
 
@@ -879,7 +938,7 @@ Criar comandos:
 
 ```text
 approve
-revision
+revision (target: script | storyboard)
 ```
 
 Persistir feedback.
@@ -908,8 +967,8 @@ integration tests
 5. ScriptAgent
 6. StoryboardAgent
 7. Orchestrator
-8. Human approval
-9. Revision workflow
+8. Human approval (com suporte a target de revisão)
+9. Revision workflow (granular)
 10. Integration tests
 ```
 
@@ -929,8 +988,8 @@ O MVP 1 estará pronto quando:
 - [ ] o estado do projeto for persistido;
 - [ ] o pipeline parar aguardando aprovação;
 - [ ] for possível aprovar;
-- [ ] for possível solicitar revisão;
-- [ ] revisões gerarem novas versões;
+- [ ] for possível solicitar revisão granular (revisar roteiro + storyboard ou apenas storyboard);
+- [ ] revisões gerarem novas versões mantendo o histórico;
 - [ ] existirem testes básicos;
 - [ ] existirem logs de execução;
 - [ ] nenhuma etapa dependa de geração audiovisual.

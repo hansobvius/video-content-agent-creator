@@ -1,0 +1,27 @@
+project:
+  id: hybrid-car-explainer
+  title: Como funciona um carro híbrido
+video:
+  objective: Explicar o funcionamento básico de um veículo híbrido e a sinergia entre
+    os motores
+  audience: Público geral sem conhecimento técnico aprofundado
+  platform: YouTube
+  language: pt-BR
+  duration_seconds: 300
+  aspect_ratio: '16:9'
+style:
+  tone: educacional
+  visual_style: moderno e didático
+  complexity: iniciante
+content:
+  mandatory_topics:
+  - motor elétrico
+  - motor a combustão
+  - bateria de tração
+  - frenagem regenerativa
+  - modo EV
+  - modo híbrido combinado
+constraints:
+  avoid:
+  - linguagem excessivamente técnica ou jargões de engenharia mecânica sem explicação
+  - dados estatísticos não verificados

@@ -1,0 +1,57 @@
+{
+  "project_id": "hybrid-car-explainer",
+  "status": "AWAITING_APPROVAL",
+  "current_stage": "awaiting_approval",
+  "versions": {
+    "script": 1,
+    "storyboard": 1,
+    "revision": 0
+  },
+  "artifacts": {
+    "spec": "VIDEO_SPEC.yaml",
+    "script_json": "scripts/script_v1.json",
+    "script_md": "scripts/script_v1.md",
+    "storyboard_json": "storyboards/storyboard_v1.json",
+    "storyboard_md": "storyboards/storyboard_v1.md",
+    "last_feedback": null
+  },
+  "history": [
+    {
+      "from_status": "CREATED",
+      "to_status": "SPEC_VALIDATED",
+      "timestamp": "2026-09-20T20:40:31.044392+00:00",
+      "details": "VIDEO_SPEC validated and saved successfully."
+    },
+    {
+      "from_status": "SPEC_VALIDATED",
+      "to_status": "SCRIPT_GENERATING",
+      "timestamp": "2026-09-20T20:40:31.057580+00:00",
+      "details": null
+    },
+    {
+      "from_status": "SCRIPT_GENERATING",
+      "to_status": "SCRIPT_COMPLETED",
+      "timestamp": "2026-09-20T20:40:31.084194+00:00",
+      "details": "Script v1 generated with 4 scenes."
+    },
+    {
+      "from_status": "SCRIPT_COMPLETED",
+      "to_status": "STORYBOARD_GENERATING",
+      "timestamp": "2026-09-20T20:40:31.094436+00:00",
+      "details": null
+    },
+    {
+      "from_status": "STORYBOARD_GENERATING",
+      "to_status": "STORYBOARD_COMPLETED",
+      "timestamp": "2026-09-20T20:40:31.124511+00:00",
+      "details": "Storyboard v1 generated with 4 scenes."
+    },
+    {
+      "from_status": "STORYBOARD_COMPLETED",
+      "to_status": "AWAITING_APPROVAL",
+      "timestamp": "2026-09-20T20:40:31.137932+00:00",
+      "details": "Pipeline paused. Awaiting human review."
+    }
+  ],
+  "updated_at": "2026-09-20T20:40:31.137966+00:00"
+}

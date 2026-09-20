@@ -1,0 +1,42 @@
+{
+  "project_id": "hybrid-car-explainer",
+  "version": 2,
+  "scenes": [
+    {
+      "scene_id": "scene_001",
+      "duration_seconds": 45,
+      "narration": "Olá! Hoje vamos entender tudo sobre Como funciona um carro híbrido.",
+      "visual_description": "Plano visual revisado atendendo ao feedback: Na cena 2, mude o tipo de asset para diagram com foco no motor. Veículo em destaque com gráficos modernos e estilo moderno e didático.",
+      "camera": "static",
+      "transition": "cut",
+      "asset_type": "diagram"
+    },
+    {
+      "scene_id": "scene_002",
+      "duration_seconds": 105,
+      "narration": "Para entendermos o funcionamento, veja como os principais componentes interagem de forma integrada.",
+      "visual_description": "Plano visual revisado atendendo ao feedback: Na cena 2, mude o tipo de asset para diagram com foco no motor. Animação esquemática mostrando fluxo de energia e peças centrais.",
+      "camera": "pan right",
+      "transition": "fade",
+      "asset_type": "diagram"
+    },
+    {
+      "scene_id": "scene_003",
+      "duration_seconds": 105,
+      "narration": "Cobrimos tópicos essenciais como motor elétrico, motor a combustão, bateria de tração.",
+      "visual_description": "Plano visual revisado atendendo ao feedback: Na cena 2, mude o tipo de asset para diagram com foco no motor. Cortes alternados com elementos visuais elucidativos.",
+      "camera": "static",
+      "transition": "fade",
+      "asset_type": "diagram"
+    },
+    {
+      "scene_id": "scene_004",
+      "duration_seconds": 45,
+      "narration": "Agora você conhece como funciona Como funciona um carro híbrido. Deixe seu like e até a próxima!",
+      "visual_description": "Plano visual revisado atendendo ao feedback: Na cena 2, mude o tipo de asset para diagram com foco no motor. Resumo visual com call to action final.",
+      "camera": "pan right",
+      "transition": "fade",
+      "asset_type": "diagram"
+    }
+  ]
+}
