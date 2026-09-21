@@ -19,39 +19,39 @@
     {
       "from_status": "CREATED",
       "to_status": "SPEC_VALIDATED",
-      "timestamp": "2026-09-20T20:40:31.044392+00:00",
+      "timestamp": "2026-09-21T00:17:07.559544+00:00",
       "details": "VIDEO_SPEC validated and saved successfully."
     },
     {
       "from_status": "SPEC_VALIDATED",
       "to_status": "SCRIPT_GENERATING",
-      "timestamp": "2026-09-20T20:40:31.057580+00:00",
+      "timestamp": "2026-09-21T00:17:07.575354+00:00",
       "details": null
     },
     {
       "from_status": "SCRIPT_GENERATING",
       "to_status": "SCRIPT_COMPLETED",
-      "timestamp": "2026-09-20T20:40:31.084194+00:00",
+      "timestamp": "2026-09-21T00:17:07.611603+00:00",
       "details": "Script v1 generated with 4 scenes."
     },
     {
       "from_status": "SCRIPT_COMPLETED",
       "to_status": "STORYBOARD_GENERATING",
-      "timestamp": "2026-09-20T20:40:31.094436+00:00",
+      "timestamp": "2026-09-21T00:17:07.626709+00:00",
       "details": null
     },
     {
       "from_status": "STORYBOARD_GENERATING",
       "to_status": "STORYBOARD_COMPLETED",
-      "timestamp": "2026-09-20T20:40:31.124511+00:00",
+      "timestamp": "2026-09-21T00:17:07.661542+00:00",
       "details": "Storyboard v1 generated with 4 scenes."
     },
     {
       "from_status": "STORYBOARD_COMPLETED",
       "to_status": "AWAITING_APPROVAL",
-      "timestamp": "2026-09-20T20:40:31.137932+00:00",
+      "timestamp": "2026-09-21T00:17:07.686407+00:00",
       "details": "Pipeline paused. Awaiting human review."
     }
   ],
-  "updated_at": "2026-09-20T20:40:31.137966+00:00"
+  "updated_at": "2026-09-21T00:17:07.686435+00:00"
 }
